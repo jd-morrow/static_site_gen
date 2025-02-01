@@ -1,1 +1,1 @@
-python3 -m unittest discover -s public/src
+python3 -m unittest discover -s src

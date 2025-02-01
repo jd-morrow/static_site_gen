@@ -160,5 +160,11 @@ this is paragraph text
             "<div><pre><code>This is a code block\n</code></pre><p>this is paragraph text</p></div>",
         )
 
+class TestExtractMarkdown(unittest.TestCase):
+    def test_extractTitle_valid(self):
+        input = "# This is the header!\nThis is not a header!\nThis is also not a header!"
+        result = extract_title(input)
+        self.assertEqual(result,"This is the header!")
+
 if __name__ == "__main__":
     unittest.main()
