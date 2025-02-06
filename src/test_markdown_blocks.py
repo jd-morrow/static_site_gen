@@ -164,7 +164,33 @@ class TestExtractMarkdown(unittest.TestCase):
     def test_extractTitle_valid(self):
         input = "# This is the header!\nThis is not a header!\nThis is also not a header!"
         result = extract_title(input)
-        self.assertEqual(result,"This is the header!")
+        self.assertEqual(result, "This is the header!")
+
+    def test_extractTitle_no_h1(self):
+        with self.assertRaises(Exception):
+            input = "## This is not an h1 header!\nThis is not a header at all!\n## This is also not an h1 header!"
+            result = extract_title(input)
+
+    def test_extractTitle_whitespace(self):
+        input = "   #   There's leading whitespace on this line\nThis isn't a header"
+        result = extract_title(input)
+        self.assertEqual(result, "There's leading whitespace on this line")
+
+    def test_extractTitle_empty_header(self):
+        input = "#"
+        result = extract_title(input)
+        self.assertEqual(result, "")
+
+    def test_extractTitle_h1_only_spaces(self):
+        input = "#     "
+        result = extract_title(input)
+        self.assertEqual(result, "")
+
+    def test_extractTitle_multiple_h1(self):
+        input = "# First Header\nSome content\n# Second Header"
+        result = extract_title(input)
+        self.assertEqual(result, "First Header")
+
 
 if __name__ == "__main__":
     unittest.main()
