@@ -2,6 +2,9 @@ import os
 import shutil
 
 from copystatic import copy_files_recursive
+from markdown_blocks import *
+from htmlnode import *
+from generation import generate_page
 
 
 dir_path_static = "./static"
@@ -16,5 +19,6 @@ def main():
     print("Copying static files to public directory...")
     copy_files_recursive(dir_path_static, dir_path_public)
 
+    generate_page("content/index.md", "template.html", "public/index.html")
 
 main()
