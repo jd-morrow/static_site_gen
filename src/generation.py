@@ -23,3 +23,22 @@ def generate_page(from_path, template_path, dest_path):
         file.write(full_html_page)
     
     return True
+
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path):
+    if not os.path.exists(dir_path_content):
+        raise Exception("Invalid content path")
+    
+    if not os.path.exists(dest_dir_path):
+        os.mkdir(dest_dir_path)
+
+    for content in os.listdir(dir_path_content):
+        from_path = os.path.join(dir_path_content, content)
+
+        if os.path.isfile(from_path):
+            if from_path.endswith(".md"):
+                dest_path = os.path.splitext(os.path.join(dest_dir_path, content))[0] + ".html"
+                generate_page(from_path, template_path, dest_path)
+
+        else:
+            dest_path = os.path.join(dest_dir_path, content)
+            generate_pages_recursive(from_path, template_path, dest_path)
